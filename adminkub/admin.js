@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:5000/api/works';
+const API_URL = 'https://lovecraft-fysc.onrender.com/api/works';
 
 // Elements
 const totalWorks = document.getElementById('totalWorks');
