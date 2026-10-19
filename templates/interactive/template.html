@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>เป็นแฟนกันนะ</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #faf6f3;
+        --card: #fff;
+        --text: #4a3f3f;
+        --sub: #9a8c8c;
+        --accent: #e8a0b4;
+        --line: #efe6e2;
+        --shadow: #0000000d;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #1c1718;
+          --card: #272022;
+          --text: #f1e6e6;
+          --sub: #a89a9a;
+          --accent: #e8a0b4;
+          --line: #3a2f31;
+          --shadow: #00000040;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #1c1718;
+        --card: #272022;
+        --text: #f1e6e6;
+        --sub: #a89a9a;
+        --accent: #e8a0b4;
+        --line: #3a2f31;
+        --shadow: #00000040;
+      }
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        font-family: "Mali", "Sarabun", "Noto Sans Thai", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 26px 24px 28px;
+        width: min(90vw, 340px);
+        text-align: center;
+        box-shadow: 0 8px 30px var(--shadow);
+        position: relative;
+        z-index: 2;
+      }
+      .photo {
+        display: block;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        border: 5px solid var(--card);
+        outline: 1.5px solid var(--accent);
+        overflow: hidden;
+        position: relative;
+        background: var(--line);
+      }
+      .photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .ph {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        color: var(--sub);
+        font-size: 0.85rem;
+      }
+      .ph b {
+        font-size: 2rem;
+        font-weight: 400;
+      }
+      .photo.has .ph {
+        display: none;
+      }
+      .photo:not(.has) img {
+        display: none;
+      }
+      h1 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0 0 6px;
+      }
+      #msg {
+        min-height: 1.5em;
+        margin: 0 0 22px;
+        font-size: 0.92rem;
+        color: var(--sub);
+      }
+      .btns {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+      }
+      button {
+        font-family: inherit;
+        font-weight: 600;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: transform 0.15s;
+      }
+      #yes {
+        background: var(--accent);
+        color: #fff;
+        border: 0;
+        font-size: 1rem;
+        padding: 12px 28px;
+      }
+      #yes:active {
+        transform: scale(0.95);
+      }
+      #no {
+        background: transparent;
+        color: var(--sub);
+        border: 1px solid var(--line);
+        font-size: 0.92rem;
+        padding: 10px 20px;
+        z-index: 5;
+        transition:
+          left 0.25s,
+          top 0.25s;
+      }
+      #no.run {
+        position: fixed;
+        background: var(--card);
+      }
+      .heart {
+        position: fixed;
+        bottom: -30px;
+        pointer-events: none;
+        z-index: 1;
+        color: var(--accent);
+        animation: up linear forwards;
+      }
+      @keyframes up {
+        to {
+          transform: translateY(-110vh);
+          opacity: 0;
+        }
+      }
+      @keyframes pop {
+        0% {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .pop {
+        animation: pop 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="photo" id="photoBox">
+        <!-- ✏️ วางลิงก์รูปของคุณตรง src ด้านล่างนี้ -->
+        <img id="photo" src="./2.jpeg"" />
+        <div class="ph"><b>♡</b>ใส่ลิงก์รูปที่ src</div>
+      </div>
+      <h1 id="q">เป็นแฟนกันนะ?</h1>
+      <p id="msg"></p>
+      <div class="btns" id="btns">
+        <button id="yes">ตกลง</button>
+        <button id="no">ไม่เอา</button>
+      </div>
+    </div>
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const no = $("no"),
+        yes = $("yes"),
+        msg = $("msg"),
+        q = $("q"),
+        img = $("photo"),
+        box = $("photoBox");
+      img.addEventListener("load", () => box.classList.add("has"));
+      img.addEventListener("error", () => box.classList.remove("has"));
+      if (img.complete && img.naturalWidth) box.classList.add("has");
+      const lines = [
+        "จับไม่ได้หรอก",
+        "ลองกดใหม่สิ",
+        "อย่าใจร้ายสิ",
+        "คิดดีๆ อีกทีน้า",
+        "ปุ่มนี้เขิน หนีไปแล้ว",
+        "กดตกลงดีกว่าน้า",
+        "ไม่ยอมให้กดหรอก",
+      ];
+      const labels = [
+        "ไม่เอา",
+        "แน่ใจเหรอ?",
+        "คิดใหม่นะ",
+        "ขอร้อง",
+        "ไม่!!",
+        "อย่านะ",
+      ];
+      let n = 0,
+        scale = 1;
+      function dodge(e) {
+        if (e) e.preventDefault();
+        n++;
+        no.classList.add("run");
+        const w = no.offsetWidth,
+          h = no.offsetHeight,
+          p = 12;
+        no.style.left = p + Math.random() * (innerWidth - w - p * 2) + "px";
+        no.style.top = p + Math.random() * (innerHeight - h - p * 2) + "px";
+        no.textContent = labels[n % labels.length];
+        msg.textContent = lines[n % lines.length];
+        scale = Math.min(scale + 0.1, 1.8);
+        yes.style.transform = "scale(" + scale + ")";
+        yes.style.margin = scale * 4 + "px";
+      }
+      no.addEventListener("pointerenter", (e) => {
+        if (e.pointerType === "mouse") dodge(e);
+      });
+      no.addEventListener("touchstart", dodge, { passive: false });
+      no.addEventListener("click", dodge);
+      function heart() {
+        const s = document.createElement("div");
+        s.className = "heart";
+        s.textContent = Math.random() < 0.5 ? "♡" : "♥";
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.fontSize = 12 + Math.random() * 16 + "px";
+        s.style.opacity = 0.4 + Math.random() * 0.4;
+        s.style.animationDuration = 6 + Math.random() * 5 + "s";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 11500);
+      }
+      setInterval(heart, 1400);
+      yes.addEventListener("click", () => {
+        $("btns").style.display = "none";
+        no.style.display = "none";
+        q.textContent = "เป็นแฟนกันแล้วนะ";
+        msg.textContent = "เเคปหน้าจอนี้ส่งให้คนที่ขอคุณเป็นเเฟน";
+        msg.style.marginBottom = "0";
+        box.classList.add("pop");
+        q.classList.add("pop");
+        for (let i = 0; i < 24; i++) setTimeout(heart, i * 100);
+        setInterval(heart, 350);
+      });
+    </script>
+  </body>
+</html>

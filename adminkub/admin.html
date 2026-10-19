@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveCraft | จัดการ Work</title>
+    <link rel="stylesheet" href="./admin.css">
+    <script src="./admin.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div>
+            <p class="brand">LoveCraft</p>
+            <h1>จัดการคำสั่งซื้อ</h1>
+            <p class="subtitle">ตรวจสอบข้อมูลเว็บไซต์ที่ลูกค้าส่งเข้ามา</p>
+        </div>
+
+        <button id="refreshBtn" type="button">
+            ↻ โหลดข้อมูลใหม่
+        </button>
+    </header>
+
+    <main class="container">
+        <section class="stats">
+            <div class="stat-card">
+                <span>คำสั่งซื้อทั้งหมด</span>
+                <strong id="totalWorks">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>สถานะระบบ</span>
+                <strong id="systemStatus">กำลังโหลด...</strong>
+            </div>
+        </section>
+
+        <section class="work-section">
+            <div class="section-heading">
+                <h2>รายการ Work</h2>
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="ค้นหาชื่อเว็บหรืออีเมล..."
+                >
+            </div>
+
+            <p id="message" role="status">กำลังโหลดข้อมูล...</p>
+            <div id="workList" class="work-list"></div>
+        </section>
+    </main>
+</body>
+</html>

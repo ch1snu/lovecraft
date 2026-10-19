@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>นับวันรักของเรา</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&display=swap"
+    />
+    <script>
+      // รูปสำรองที่จะแสดงถ้าลิงก์รูปโหลดไม่ได้
+      var PH =
+        "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23fde9ee'/%3E%3Cpath d='M100 128 C72 108 66 94 66 86 C66 76 74 70 83 70 C91 70 97 74 100 80 C103 74 109 70 117 70 C126 70 134 76 134 86 C134 94 128 108 100 128Z' fill='%23f2a1b5'/%3E%3C/svg%3E";
+    </script>
+    <style>
+      :root {
+        --bg: #fffafa;
+        --card: #ffffff;
+        --ink: #5f4b50;
+        --soft: #b9a2a8;
+        --pink: #f2a1b5;
+        --pink-l: #fde9ee;
+        --line: #f6e3e8;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #241b1e;
+          --card: #2f2328;
+          --ink: #f4e6e9;
+          --soft: #b99ea5;
+          --pink: #f3a9bc;
+          --pink-l: #3d2a31;
+          --line: #3b2c32;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #241b1e;
+        --card: #2f2328;
+        --ink: #f4e6e9;
+        --soft: #b99ea5;
+        --pink: #f3a9bc;
+        --pink-l: #3d2a31;
+        --line: #3b2c32;
+      }
+      html {
+        height: 100%;
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Mali", "Noto Sans Thai", "Sarabun", system-ui, sans-serif;
+        display: flex;
+        justify-content: center;
+        padding: 48px 24px 56px;
+        overflow-x: hidden;
+      }
+      main {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 380px;
+        text-align: center;
+      }
+      .hearts {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .hearts span {
+        position: absolute;
+        bottom: -30px;
+        color: var(--pink);
+        opacity: 0;
+        animation: rise linear infinite;
+      }
+      @keyframes rise {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.35;
+        }
+        90% {
+          opacity: 0.25;
+        }
+        100% {
+          transform: translateY(-105vh) translateX(18px);
+          opacity: 0;
+        }
+      }
+      .pair {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 14px;
+      }
+      .pic {
+        width: 128px;
+        height: 128px;
+        border-radius: 50%;
+        border: 5px solid var(--card);
+        box-shadow: 0 6px 20px rgba(200, 120, 140, 0.18);
+        overflow: hidden;
+        background: var(--pink-l);
+        animation: bob 4s ease-in-out infinite;
+        transition: transform 0.3s;
+      }
+      .pic + .pic {
+        margin-left: -18px;
+        animation-delay: -2s;
+      }
+      .pic:hover {
+        transform: translateY(-8px) scale(1.05);
+        z-index: 2;
+      }
+      .pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      .names {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .names i {
+        display: inline-block;
+        font-style: normal;
+        color: var(--pink);
+        margin: 0 6px;
+        animation: beat 1.4s ease-in-out infinite;
+      }
+      @keyframes beat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.35);
+        }
+      }
+      .since {
+        margin: 6px 0 40px;
+        color: var(--soft);
+        font-size: 0.85rem;
+      }
+      .count b {
+        display: block;
+        font-size: 5.2rem;
+        line-height: 1;
+        font-weight: 300;
+        color: var(--pink);
+        letter-spacing: -2px;
+        font-variant-numeric: tabular-nums;
+      }
+      .count span {
+        display: block;
+        margin-top: 8px;
+        color: var(--soft);
+        font-size: 0.95rem;
+      }
+      .ymd {
+        margin: 18px 0 12px;
+        font-size: 0.95rem;
+      }
+      .ymd span {
+        display: inline-block;
+        margin: 0 4px;
+        padding: 4px 14px;
+        background: var(--pink-l);
+        border-radius: 999px;
+      }
+      .live {
+        margin: 0 0 36px;
+        font-size: 0.85rem;
+        color: var(--soft);
+        font-variant-numeric: tabular-nums;
+      }
+      .live b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .card {
+        background: var(--card);
+        border: 1.5px solid var(--line);
+        border-radius: 24px;
+        padding: 18px 20px;
+        text-align: left;
+      }
+      .card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+      .card small {
+        display: block;
+        margin-top: 2px;
+        color: var(--soft);
+        font-size: 0.8rem;
+      }
+      .bar {
+        position: relative;
+        height: 6px;
+        margin-top: 16px;
+        background: var(--pink-l);
+        border-radius: 99px;
+      }
+      .bar div {
+        height: 100%;
+        width: 0;
+        background: var(--pink);
+        border-radius: 99px;
+        transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .bar em {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        font-style: normal;
+        font-size: 0.8rem;
+        line-height: 1;
+        transform: translate(-50%, -52%);
+        transition: left 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hearts {
+          display: none;
+        }
+        .pic,
+        .names i {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts" id="hearts" aria-hidden="true"></div>
+    <main>
+      <!-- ใส่ลิงก์รูปของคุณในแท็ก img ตรง src ได้เลย (ถ้าลิงก์โหลดไม่ได้จะแสดงรูปหัวใจแทน) -->
+      <div class="pair">
+        <div class="pic">
+          <img
+            alt="รูปคนแรก"
+            src="https://example.com/photo1.jpg"
+            onerror="
+              this.onerror = null;
+              this.src = PH;
+            "
+          />
+        </div>
+        <div class="pic">
+          <img
+            alt="รูปคนที่สอง"
+            src="https://example.com/photo2.jpg"
+            onerror="
+              this.onerror = null;
+              this.src = PH;
+            "
+          />
+        </div>
+      </div>
+
+      <p class="names">
+        <span id="nameA">เธอ</span><i>♡</i><span id="nameB">ฉัน</span>
+      </p>
+      <p class="since" id="since"></p>
+
+      <div class="count">
+        <b id="total">0</b><span>วันที่เราอยู่ด้วยกัน</span>
+      </div>
+      <p class="ymd">
+        <span><b id="y">0</b> ปี</span><span><b id="m">0</b> เดือน</span
+        ><span><b id="d">0</b> วัน</span>
+      </p>
+      <p class="live">
+        หรือ <b id="hh">0</b> ชั่วโมง <b id="mm">0</b> นาที
+        <b id="ss">0</b> วินาที ของวันนี้ 🤍
+      </p>
+
+      <section class="card" id="monthlyCard">
+        <p id="monthly"></p>
+        <small id="monthlyDate"></small>
+        <div class="bar">
+          <div id="bar"></div>
+          <em id="dot">🤍</em>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // ===== ตั้งค่าตรงนี้ =====
+      var NAME_A = "เธอ"; // ชื่อคนแรก (รูปซ้าย)
+      var NAME_B = "ฉัน"; // ชื่อคนที่สอง (รูปขวา)
+      var START = new Date(2026, 0, 1); // 23 กรกฎาคม 2569 (พ.ศ.) = 2026 (ค.ศ.)
+      var COUNT_START_DAY_AS_1 = false; // เปลี่ยนเป็น true ถ้าอยากนับวันเริ่มคบเป็นวันที่ 1
+      // ========================
+      var MS = 86400000;
+      var thaiMonths = [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
+      ];
+      var $ = function (id) {
+        return document.getElementById(id);
+      };
+      var fmt = function (n) {
+        return n.toLocaleString("th-TH");
+      };
+      var dim = function (yy, mm) {
+        return new Date(yy, mm + 1, 0).getDate();
+      };
+      var onDay = function (yy, mm) {
+        return new Date(yy, mm, Math.min(START.getDate(), dim(yy, mm)));
+      };
+      var shown = false;
+
+      function countUp(target) {
+        var reduce =
+          window.matchMedia &&
+          matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce || target === 0) {
+          $("total").textContent = fmt(target);
+          return;
+        }
+        var t0 = null,
+          dur = 1400;
+        function step(t) {
+          if (t0 === null) t0 = t;
+          var p = Math.min(1, (t - t0) / dur),
+            e = 1 - Math.pow(1 - p, 3);
+          $("total").textContent = fmt(Math.round(target * e));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      function render() {
+        var now = new Date(),
+          today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var diff = Math.round((today - START) / MS);
+        var total = Math.max(0, diff + (COUNT_START_DAY_AS_1 ? 1 : 0));
+        var y = today.getFullYear() - START.getFullYear();
+        var m = today.getMonth() - START.getMonth();
+        var d = today.getDate() - START.getDate();
+        if (d < 0) {
+          m--;
+          d += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+        if (m < 0) {
+          y--;
+          m += 12;
+        }
+        if (diff < 0) {
+          y = m = d = 0;
+        }
+
+        $("nameA").textContent = NAME_A;
+        $("nameB").textContent = NAME_B;
+        $("since").textContent =
+          "ตั้งเเต่ " + //==============================================================================
+          START.getDate() +
+          " " +
+          thaiMonths[START.getMonth()] +
+          " " +
+          (START.getFullYear() + 543);
+        if (!shown) {
+          countUp(total);
+          shown = true;
+        } else {
+          $("total").textContent = fmt(total);
+        }
+        $("y").textContent = y;
+        $("m").textContent = m;
+        $("d").textContent = d;
+
+        var card = $("monthlyCard");
+        if (diff < 0) {
+          card.style.display = "none";
+          return;
+        }
+        card.style.display = "";
+        var cy = today.getFullYear(),
+          cm = today.getMonth();
+        var cand = onDay(cy, cm);
+        if (cand < today) {
+          cm++;
+          if (cm > 11) {
+            cm = 0;
+            cy++;
+          }
+          cand = onDay(cy, cm);
+        }
+        var pm = cm - 1,
+          py = cy;
+        if (pm < 0) {
+          pm = 11;
+          py--;
+        }
+        var prev = onDay(py, pm);
+        var nm =
+          (cand.getFullYear() - START.getFullYear()) * 12 +
+          cand.getMonth() -
+          START.getMonth();
+        var lbl =
+          nm % 12 === 0 ? "ครบ " + nm / 12 + " ปี" : "ครบ " + nm + " เดือน";
+        var dl = Math.round((cand - today) / MS);
+        $("monthly").textContent =
+          dl === 0
+            ? "วันนี้" + lbl + "แล้ว สุขสันต์วันครบรอบนะ 🎉"
+            : "อีก " + dl + " วันจะ" + lbl;
+        $("monthlyDate").textContent =
+          cand.getDate() +
+          " " +
+          thaiMonths[cand.getMonth()] +
+          " " +
+          (cand.getFullYear() + 543);
+        var pct =
+          dl === 0
+            ? 100
+            : Math.max(
+                0,
+                Math.min(100, ((today - prev) / (cand - prev)) * 100),
+              );
+        $("bar").style.width = pct + "%";
+        $("dot").style.left = pct + "%";
+      }
+      render();
+      setInterval(render, 60000);
+
+      // เวลาที่ผ่านไปของวันนี้ นับสดทุกวินาที
+      function tick() {
+        var n = new Date(),
+          p = function (v) {
+            return String(v).padStart(2, "0");
+          };
+        $("hh").textContent = p(n.getHours());
+        $("mm").textContent = p(n.getMinutes());
+        $("ss").textContent = p(n.getSeconds());
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      // หัวใจลอยขึ้นเบาๆ ที่พื้นหลัง
+      var hs = $("hearts");
+      for (var i = 0; i < 9; i++) {
+        var s = document.createElement("span");
+        s.textContent = "♡";
+        s.style.left = 5 + i * 11 + "%";
+        s.style.fontSize = 12 + (i % 3) * 6 + "px";
+        s.style.animationDuration = 11 + (i % 4) * 3 + "s";
+        s.style.animationDelay = -i * 1.7 + "s";
+        hs.appendChild(s);
+      }
+    </script>
+  </body>
+</html>

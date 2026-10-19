@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สั่งซื้อไม่สำเร็จ ♡ LoveCraft</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap");
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 22px;
+        display: grid;
+        place-items: center;
+        font-family: "Kanit", sans-serif;
+        font-weight: 300;
+        color: #554943;
+        background: linear-gradient(145deg, #fffaf6, #fff2ed, #fff7f5);
+      }
+
+      .card {
+        width: 100%;
+        max-width: 430px;
+        padding: 35px 27px;
+        border: 1px solid #f5e3dc;
+        border-radius: 28px;
+        background: #ffffffdf;
+        box-shadow: 0 18px 55px #d7a68e20;
+        text-align: center;
+        animation: appear 0.65s ease;
+      }
+
+      .logo {
+        color: #c98775;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 23px;
+      }
+
+      .logo span {
+        color: #e8a796;
+      }
+
+      .illustration {
+        width: 115px;
+        height: 115px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 23px;
+        border-radius: 35px;
+        background: #fff0e9;
+        font-size: 57px;
+        animation: wobble 2.5s infinite;
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 6px 13px;
+        border-radius: 30px;
+        background: #fff0e7;
+        color: #bc806a;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+
+      h1 {
+        margin: 17px 0 10px;
+        color: #c7836d;
+        font-size: 26px;
+        font-weight: 500;
+      }
+
+      .description {
+        margin: 0;
+        color: #99877f;
+        font-size: 13px;
+        line-height: 2;
+      }
+
+      .note {
+        margin: 24px 0;
+        padding: 15px;
+        border: 1px dashed #ecc9ba;
+        border-radius: 16px;
+        background: #fff9f5;
+        font-size: 12px;
+        line-height: 1.9;
+        text-align: left;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 13px;
+        margin-top: 11px;
+        border: none;
+        border-radius: 14px;
+        text-decoration: none;
+        font-family: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .primary {
+        background: linear-gradient(135deg, #eeb39f, #d99079);
+        color: white;
+        box-shadow: 0 7px 17px #dfa18a40;
+      }
+
+      .secondary {
+        background: #fff0e9;
+        color: #bb806a;
+      }
+
+      .footer {
+        margin-top: 24px;
+        color: #b6a39b;
+        font-size: 11px;
+      }
+
+      .heart {
+        position: fixed;
+        bottom: -30px;
+        pointer-events: none;
+        animation: floatUp 3s ease-out forwards;
+      }
+
+      @keyframes appear {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes wobble {
+        0%,
+        100% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(-4deg);
+        }
+        75% {
+          transform: rotate(4deg);
+        }
+      }
+
+      @keyframes floatUp {
+        to {
+          transform: translateY(-110vh) rotate(30deg);
+          opacity: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <div class="logo">♡ Love<span>Craft</span></div>
+
+      <div class="illustration" aria-hidden="true">🥺</div>
+
+      <span class="pill">! ORDER FAILED</span>
+
+      <h1>อุ๊ปส์! สั่งซื้อไม่สำเร็จ</h1>
+
+      <p class="description">
+        ดูเหมือนว่าจะมีบางอย่างผิดพลาดนิดหน่อย ♡<br />
+        ไม่ต้องกังวลนะ ข้อมูลของคุณยังแก้ไขได้<br />
+        ลองทำรายการอีกครั้งได้เลย
+      </p>
+
+      <div class="note">
+        <strong>🌷 ลองตรวจสอบสิ่งเหล่านี้นะ</strong><br />
+        ♡ ตรวจสอบว่ากรอกข้อมูลครบทุกช่อง<br />
+        ♡ ตรวจสอบ URL รูปภาพให้ถูกต้อง<br />
+        ♡ ตรวจสอบอินเทอร์เน็ตแล้วลองอีกครั้ง<br />
+        <span style="color: #a48b80">
+          หากยังไม่สำเร็จ อาจเกิดจากระบบรับคำสั่งซื้อขัดข้อง
+        </span>
+      </div>
+
+      <a class="btn primary" href="index.html"> ↻ กลับไปลองใหม่ </a>
+
+      <a class="btn secondary" href="index.html"> ♡ กลับหน้าหลัก </a>
+
+      <div class="footer">ไม่เป็นไรนะ เราอยู่ตรงนี้เสมอ ♡</div>
+    </main>
+
+    <script>
+      // เอฟเฟกต์เล็ก ๆ เมื่อกดปุ่มลองใหม่
+      document.querySelector(".primary").addEventListener("click", () => {
+        try {
+          sessionStorage.setItem("lovecraft_retry", "true");
+        } catch (_) {
+          // ยังสามารถกลับหน้าหลักได้ แม้เบราว์เซอร์ปิด storage
+        }
+      });
+    </script>
+  </body>
+</html>
